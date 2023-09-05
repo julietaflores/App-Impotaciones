@@ -18,6 +18,10 @@ export class InboxPage implements OnInit {
   apiCalled: boolean = false;
   interval: any;
 
+
+
+
+  
   message: any = '';
   messageList: any[] = [];
   yourMessage: boolean = false;
