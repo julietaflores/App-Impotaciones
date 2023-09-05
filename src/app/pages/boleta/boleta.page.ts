@@ -46,7 +46,6 @@ export class BoletaPage implements OnInit {
 
 
 
-  
   constructor(  
     public util: UtilService,
     public api: ApiService,
