@@ -44,6 +44,9 @@ export class BoletaPage implements OnInit {
   fecha_registro: any='';
   AB:any='';
 
+
+
+  
   constructor(  
     public util: UtilService,
     public api: ApiService,
