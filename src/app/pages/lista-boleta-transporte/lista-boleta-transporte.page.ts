@@ -165,4 +165,16 @@ export class ListaBoletaTransportePage implements OnInit {
 
 
 
+  edit_detalle_boleta(id:any, Codigo:any) {
+    const param: NavigationExtras = {
+      queryParams: {
+        "Id": id,
+        "Detalle_b": Codigo 
+      }
+    };
+    this.util.navigateToPage('boleta-edit-e', param);
+  }
+
+
+
 }

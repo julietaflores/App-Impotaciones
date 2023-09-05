@@ -32,34 +32,53 @@
       <div class="item-total-list" style="width: 100%;">
          <ion-label class="store-address_history_title_bt"  style="width: 8%; text-align: left;"> #</ion-label> 
          <ion-label class="store-address_history_title_bt"  style="width: 16%; text-align: left;">  {{util.translate('Código Boleta')}}</ion-label> 
-         <ion-label class="store-address_history_title_bt"  style="width: 16%; text-align: left;" > {{util.translate('Ticket Balanza')}}  </ion-label> 
-         <ion-label class="store-address_history_title_bt"  style="width: 15%; text-align: left;"> {{util.translate('Fecha Registro')}} </ion-label> 
-         <ion-label class="store-address_history_title_bt"  style="width: 15%; text-align: left;"> {{util.translate('Estado Boleta')}} </ion-label> 
-         <ion-label  class="store-address_history_title_bt"  style="width: 15%; text-align: left;"> {{util.translate('Detalle')}} </ion-label> 
+         <ion-label class="store-address_history_title_bt"  style="width: 20%; text-align: left;" > {{util.translate('Ticket Balanza')}}  </ion-label> 
+         <ion-label class="store-address_history_title_bt"  style="width: 30%; text-align: left;"> {{util.translate('Fecha Registro')}} </ion-label> 
+         <ion-label class="store-address_history_title_bt"  style="width: 26%; text-align: left;"> {{util.translate('Estado Boleta')}} </ion-label> 
       </div>
     </ion-card-content>
 
 
+
+
+
     <ion-card-content *ngFor="let item of oldOrders"  class="card-content"  style="padding: 2px;">
 
-    <div class="item-total-list">
+    <div class="item-total-list" >
 
+      <ion-row style="padding: 0px !important;">
         <ion-label class="store-address_history_bt"  style="width: 8%;text-align: left;"> {{item.cont}}</ion-label> 
         <ion-label class="store-address_history_bt"  style="width: 16%;text-align: left;"> {{item.Codigo}}</ion-label> 
-        <ion-label class="store-address_history_bt"  style="width: 16%;text-align: left;"> {{item.Ticket}}  </ion-label> 
-        <ion-label class="store-address_history_bt"  style="width: 15%;text-align: left;">{{item.FechaRegistroo}} </ion-label> 
-        <ion-label class="store-address_history_bt"  style="width: 15%;text-align: left; color: red;">{{item.estado_boleta}} </ion-label> 
+        <ion-label class="store-address_history_bt"  style="width: 20%;text-align: left;"> {{item.Ticket}}  </ion-label> 
+        <ion-label class="store-address_history_bt"  style="width: 30%;text-align: left;">{{item.FechaRegistroo}} </ion-label> 
+        <ion-label class="store-address_history_bt"  style="width: 26%;text-align: left; color: red;">{{item.estado_boleta}} </ion-label> 
+        
+       
+          <ion-button   class="store-address_history" style="width: 48%;" mode="ios"  (click)="get_detalle_boleta(item.Id,item.Codigo)">   
+            <ion-icon  name="list" ></ion-icon>
+          </ion-button>
+     
+          <ion-button   class="store-address_history" style="width: 49%; " mode="ios"  (click)="edit_detalle_boleta(item.Id,item.Codigo)">   
+            <ion-icon  name="search" ></ion-icon>
+          </ion-button>
 
-        <ion-button   class="store-address_history" style="width: 15%; text-align: left;"
-          mode="ios"  (click)="get_detalle_boleta(item.Id,item.Codigo )">   
-          <ion-icon  name="list" ></ion-icon>
-        </ion-button>  
+
+      </ion-row>
+
       
 
+
+      
     </div>
 
 
+
+
+
+
     </ion-card-content>
+
+
 
   </ion-card>
  

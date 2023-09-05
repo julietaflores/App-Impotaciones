@@ -1,0 +1,142 @@
+<ion-header class="ion-no-border" mode="md" [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="onBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{util.translate("Registrar Boleta (Transporte)")}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+  <div class="login-content-edit-boleta animated animatedFadeInUp fadeInUp">
+
+
+    <ion-item lines="none">
+      <ion-icon name="home-outline" slot="start"></ion-icon>
+      <ion-input [placeholder]="util.translate('Almacen Recepción')" type="text" [(ngModel)]="nombre_almacen_recepcion"   disabled="true">
+      </ion-input>
+    </ion-item>
+
+
+
+    <ion-item lines="none">
+      <ion-icon name="time-outline" slot="start"></ion-icon>
+      <ion-input [placeholder]="util.translate('Fecha Registro')" type="text" [(ngModel)]="fecha_registro"  disabled="true" >
+      </ion-input>
+    </ion-item>
+
+
+
+
+    <ion-item lines="none" detail="" (click)="openTicketBalanza()">
+        <ion-label>
+          <h2><span>1.-</span> {{util.translate('Lista Ticket Balanza')}} </h2>
+          <br>
+          <br>
+
+          <ion-label *ngFor="let item of lista_ticket_balanza"> 
+            <p>{{util.translate('Nro de Ticket Balanzas')}}: {{item.U_NroTicket}}</p>
+            <p>{{util.translate('Nro de Placa')}}: {{item.U_Placa}}</p>
+            <p>{{item.U_Origen}}</p>
+            <p>{{util.translate('Marca')}}: {{item.U_Marca}}</p>
+            <p>{{util.translate('Chofer')}}: {{item.U_NombreChofer}}</p>
+            <p>{{util.translate('CI del Chofer')}}: {{item.U_CI_Chofer}}</p>
+            <p>{{util.translate('Fecha Registro Ticket')}}: {{item.U_Fecha}}</p>
+          </ion-label>
+        </ion-label>
+    </ion-item>
+    
+
+
+
+
+  <ion-item lines="none" detail="" (click)="openDestino()">
+      <ion-label>
+        <h2><span>2.-</span> {{util.translate('Almacen Destino')}} </h2>
+        <br>
+        <br>
+        <ion-label *ngFor="let itemm of lista_ticket_destino"> 
+          <p>{{util.translate('Código Almacen')}}: {{itemm.WhsCode}}</p>
+          <p>{{util.translate('Almacen')}}: {{itemm.WhsName}}</p>
+        </ion-label>
+      </ion-label>
+  </ion-item>
+
+
+
+
+
+    
+    <ion-item lines="none" style="border-bottom: transparent; padding-bottom: 0px;" >
+      <ion-label>
+        <h2>  <span>3.-</span> {{util.translate('Comments')}} </h2>
+      </ion-label>
+    </ion-item>
+
+
+
+     <div class="item-_textarea_boleta" style="margin: 10px 0px;">
+      <ion-label class="title">{{util.translate('Comments')}} </ion-label>
+       <ion-textarea [(ngModel)]="comentario"   class="lista_datos" rows="3" type="text"   [placeholder]="util.translate('Escribe algún Comentario')" >  </ion-textarea>
+     </div>
+
+
+
+
+
+    <ion-item lines="none"> </ion-item>
+
+
+    
+    <ion-item lines="none" detail="" (click)="openlote()">
+      <ion-label>
+        <h2>  <span>4.-</span> {{util.translate('Lista de Items Registrados')}} </h2>
+        <br>
+        <br>
+
+        <ion-label *ngFor="let itemm of this.util.lotes_auxiliar_v3"> 
+          <strong><p >{{itemm.campo1}}.-</p></strong>  
+          <strong><p>{{util.translate('Nro. de Proyecto')}}: {{itemm.campo2}}</p></strong>  
+          <strong> <p>{{itemm.campo3}}</p></strong> 
+          <strong><p>{{util.translate('Nro. de Factura')}}: {{itemm.campo4}}</p></strong>   
+          <p>{{util.translate('Nro. Artículo')}}: {{itemm.campo5}}</p>
+          <p class="items-registradoss" style="color:red" >{{util.translate('Descripción')}}: {{itemm.campo6}}</p>
+          <strong> <p>{{util.translate('Cantidad Total Actualmente')}}: {{itemm.campo7}} {{itemm.campo8}}</p></strong>  
+          <strong> <p>{{util.translate('Total peso por enviar')}}: {{itemm.peso_cant}} {{itemm.campo9}}</p></strong>  
+          <p>************************************************************</p>
+
+
+        </ion-label>
+
+      </ion-label>
+    </ion-item>
+
+
+    <ion-item lines="none" *ngIf="this.util.lotes_auxiliar_v3?.length != 0" >
+      <p class="items-registradoss" style="color:black">{{util.translate('Total peso por Enviar')}} : {{this.util.total_envio}}  {{AB}}</p> 
+    </ion-item>
+
+
+
+  </div>
+</ion-content>
+
+
+
+
+
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="onSave()" expand="block" shape="round" class="login_btn" [disabled]="isLogin">
+      <span *ngIf="!isLogin"> {{util.translate('Registrar Boleta (transporte)')}}</span>
+      <ion-spinner name="circles" *ngIf="isLogin"></ion-spinner>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+

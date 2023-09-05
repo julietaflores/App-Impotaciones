@@ -1,15 +1,4 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
 
-/* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
@@ -260,6 +249,67 @@ ion-title {
     font-size: 20px;
   }
 }
+
+
+
+
+
+
+
+.login-content-edit-boleta {
+  padding: 0px 16px 0px 16px;
+
+  ion-item {
+    --min-height: 24px;
+    border-bottom: 1px solid lightgray;
+    --padding-bottom: 8px;
+    --padding-end: 16px;
+    --padding-start: 16px;
+    --padding-top: 16px;
+    --inner-padding-bottom: 4px;
+    --inner-padding-end: 4px;
+    --inner-padding-start: 4px;
+    --inner-padding-top: 4px;
+
+    ion-icon {
+      color: gray;
+    }
+
+    ion-input {
+      font-family: 'bold';
+    }
+  }
+
+  .user_img {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    border: 3px solid var(--ion-color-primary);
+    margin: auto;
+    margin-bottom: 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-width: 90px;
+    position: relative;
+  }
+
+  .reset_btn {
+    color: gray;
+    margin-top: 15px;
+    font-family: 'bold';
+  }
+
+  .login_btn {
+    margin-top: 15px;
+    font-family: 'bold';
+    font-size: 20px;
+  }
+}
+
+
+
+
 
 .div_chk {
   width: 100%;

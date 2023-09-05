@@ -163,6 +163,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/boleta/boleta.module').then( m => m.BoletaPageModule)
   },
   {
+    path: 'boleta-edit-e',
+    loadChildren: () => import('./pages/boleta-edit-e/boleta-edit-e.module').then( m => m.BoletaEditEPageModule)
+  },
+  {
     path: 'store-lotes',
     loadChildren: () => import('./pages/store-lotes/store-lotes.module').then( m => m.StoreLotesPageModule)
   },
@@ -237,6 +241,10 @@ const routes: Routes = [
   {
     path: 'store-destino',
     loadChildren: () => import('./pages/store-destino/store-destino.module').then( m => m.StoreDestinoPageModule)
+  },
+  {
+    path: 'boleta-edit-e',
+    loadChildren: () => import('./pages/boleta-edit-e/boleta-edit-e.module').then( m => m.BoletaEditEPageModule)
   }
 ];
 @NgModule({
