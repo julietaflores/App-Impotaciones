@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{util.translate("Lista Almacenes")}} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content>
+
+  
+  <ion-searchbar [placeholder]="util.translate('Search')" mode="ios" inputmode="text" type="text" (ionChange)="onSearchChange($event)" [debounce]="250" animated></ion-searchbar>
+  <h2 class="ion-text-center" *ngIf="apiCalled == false && !Almacen?.length">{{util.translate('No se encontró ningún almacén')}}</h2>
+
+
+  <ion-list *ngIf="apiCalled == false">
+    <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8,9]">
+
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+  <ion-list *ngIf="apiCalled == true">
+    <ion-item *ngFor="let item of Almacen">
+      <ion-label> {{item.WhsName}}</ion-label>
+      <ion-checkbox slot="end" mode="md" [checked]="savedAlmacenId.includes(item.WhsCode)"(ionChange)="checkChange($event,item.WhsCode)"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="savedAlmacenId.length">
+    <ion-fab-button (click)="selected()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+</ion-content>

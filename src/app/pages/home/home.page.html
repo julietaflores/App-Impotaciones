@@ -1,0 +1,166 @@
+<ion-header   class="ion-no-border" mode="md" [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="end" name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title color="light" class="ion-text-left">
+      <div class="ion-activatable">
+        <div class="head-tag" >
+          <ion-label class="title">{{addressTitle}}</ion-label>
+        </div>
+        <ion-ripple-effect type="bounded"></ion-ripple-effect>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+
+
+
+
+  <ion-select   (ionChange)="cargar_datos()"  [placeholder]="util.translate('Select State')" [(ngModel)]="estadoo"  *ngIf="items_estado?.length != 0">
+    <ion-select-option    [value]="items_estado.Id" *ngFor="let items_estado of items_estado;let i = index">
+     {{items_estado.Detalle}}
+    </ion-select-option>
+  </ion-select>
+
+
+
+  <ion-item lines="none" (click)="openSearch()"  *ngIf="items_estado?.length != 0 && oldOrders?.length != 0">
+    <ion-label>{{Detalle_Buscador}}</ion-label>
+    <ion-icon name="search-outline" slot="end"></ion-icon>
+  </ion-item>
+
+
+</ion-header>
+
+
+
+
+
+
+<ion-content class="ion-padding">
+
+  <div *ngIf="estadoo == 1 && oldOrders?.length != 0">
+
+    <ion-card *ngFor="let item of oldOrders" class="order-list" >
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img [src]="api.mediaURL+'ICON.png'"   onError="this.src='assets/imgs/placeholder.jpeg'"  />
+        </ion-thumbnail>
+        <ion-label>
+          <h2 class="store-name">{{item.cont}}. {{item.Project}}</h2>
+          <h2 class="store-name">{{util.translate('Nro. de Factura')}}: {{item.DocNum}} </h2>
+          <p class="store-name">{{item.DUI}} </p>
+          <p class="store-address">{{item.CardName}}</p>
+          <p class="store-address">{{util.translate('Fecha de Registro')}}: {{item.DocDate}}</p>
+          <p class="store-address">{{item.total}}   {{item.SalUnitMsr}} </p>
+          <p class="deliveryAddress">{{item.COMENTARIO}}</p>
+
+
+          
+         <ion-button   *ngIf="tipo_personaa == 2"  (click)="registrar_fotos_y_comentarios(item.DocEntry)" mode="ios">  <p class="deliveryAddress"> {{util.translate('Detalle de Factura')}}</p> </ion-button>
+
+
+
+        </ion-label>
+      
+      </ion-item>
+    </ion-card>
+
+  </div>
+
+
+
+  <div *ngIf="estadoo == 2 && oldOrders?.length != 0">
+
+    <ion-card *ngFor="let item of oldOrders" class="order-list" (click)="Alerta_sin_Dim()">
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img [src]="api.mediaURL+'ICON.png'"  />
+        </ion-thumbnail>
+        <ion-label>
+          <h2 class="store-name">{{item.cont}}.  {{item.Project}}</h2>
+          <h2 class="store-name">{{util.translate('Nro. de Factura')}}: {{item.DocNum}}  </h2>
+          <p class="store-name">{{item.DUI}} </p>
+          <p class="store-address">{{item.CardName}}</p>
+          <p class="store-address">{{util.translate('Fecha de Registro')}}: {{item.DocDate}}</p>
+          <p class="store-address">{{item.total}}  {{item.SalUnitMsr}}</p>
+          <p class="deliveryAddress">{{item.COMENTARIO}}</p>
+        </ion-label>
+      
+      </ion-item>
+    </ion-card>
+
+  </div>
+
+  
+
+ <div *ngIf="estadoo == 3 && oldOrders?.length != 0">
+
+    <ion-card *ngFor="let item of oldOrders" class="order-list" >
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img [src]="api.mediaURL+'ICON.png'"   onError="this.src='assets/imgs/placeholder.jpeg'"  />
+        </ion-thumbnail>
+        <ion-label>
+          <h2 class="store-name">{{item.cont}}.  {{item.Project}}</h2>
+        
+          <h2 class="store-name">{{util.translate('Nro. de Factura')}}: {{item.DocNum}} </h2>
+          <p class="store-name">{{item.DUI}} </p>
+          <p class="store-address">{{item.CardName}}</p>
+          <p class="store-address">{{util.translate('Fecha de Registro')}}: {{item.DocDate}}</p>
+          <p class="store-address">{{item.total}}   {{item.SalUnitMsr}}</p>
+          <p class="deliveryAddress">{{item.COMENTARIO}}</p>
+          
+
+
+
+          <ion-button   *ngIf="tipo_personaa == 2"  (click)="registrar_fotos_y_comentarios_dos(item.DocEntry)" mode="ios">  <p class="deliveryAddress"> {{util.translate('Detalle de Factura EG')}}</p> </ion-button>
+     
+
+
+        </ion-label>
+      
+      </ion-item>
+    </ion-card>
+
+  </div>
+
+
+
+
+    <ion-item *ngFor="let item of dummy">
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text animated style="width: 100%;height: 100px;"></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+
+
+    
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="doRefreshh($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="util.translate('Loading more data...')">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+
+
+    <div *ngIf="dummy.length == 0 && oldOrders?.length == 0" class="no-data">
+      <div [ngStyle]="{'background-image':'url(assets/imgs/no_data.png)'}" class="no-data-image"></div>
+      <ion-label class="title">{{util.translate('No hay Datos')}} </ion-label>
+    </div>
+
+
+
+
+</ion-content>
+
+
+
+

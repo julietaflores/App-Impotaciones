@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{util.translate("Lista Almacen Destino")}} </ion-title>
+    <ion-buttons slot="end" >
+      <ion-button (click)="selected()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+
+  <ion-searchbar  [placeholder]="util.translate('Buscar por Almacen')" mode="ios" inputmode="text" type="text"  (ionInput)="onInpu($event)"  #ionInputEl
+    (ionChange)="onSearchChange($event)" [debounce]="250" animated></ion-searchbar>
+
+
+  <ion-list *ngIf="apiCalled == true && Lista_TicketDestino?.length != 0">
+    <ion-radio-group   [(ngModel)]="savedLista"   (ionChange)="changed($event)">
+      <ion-item *ngFor="let item of Lista_TicketDestino" class="list" lines="none">
+        <ion-label> 
+          <p>{{util.translate('Código Almacen')}}: {{item.WhsCode}}</p>
+          <p>{{util.translate('Almacen')}}: {{item.WhsName}}</p>
+        </ion-label>
+        <ion-radio [value]="item.WhsCode" slot="end" mode="md"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+
+  <h2 class="ion-text-center" *ngIf="apiCalled == false">{{util.translate('No se encontró ningún Almacen Destino')}} </h2>
+
+  <ion-list *ngIf="apiCalled == false ">
+    <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8,9]">
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="savedListaTicketDestinoId.length">
+    <ion-fab-button (click)="selected()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+
+
+</ion-content>

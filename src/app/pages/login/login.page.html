@@ -1,0 +1,62 @@
+<ion-content>
+  <div [ngStyle]="{'background-image': 'url(assets/imgs/login13.png)'}" class="bg-image-login">
+
+  </div>
+
+
+
+  <div class="login-content">
+
+
+    <form #loginForm="ngForm" class="animated animatedFadeInUp fadeInUp" *ngIf="util.settingInfo.user_login == 0">
+      <ion-item lines="none">
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-input [placeholder]="util.translate('Email Address')" [disabled]="isLogin" [(ngModel)]="login.email"
+          type="text" name="email" #email="ngModel" spellcheck="false" autocapitalize="off" required></ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="login.email !='' || submitted == false" class="ion-padding-start">
+          {{util.translate("Email is required")}}
+        </p>
+      </ion-text>
+
+
+
+
+      <ion-item lines="none">
+        <ion-icon name="lock-closed" slot="start"></ion-icon>
+        <ion-input [placeholder]="util.translate('Password')" type="password" [disabled]="isLogin"
+          [(ngModel)]="login.password" name="password" [type]="viewPassword== true?'text':'password'"
+          #password="ngModel" required></ion-input>
+        <ion-button (click)="changeType()" fill="clear" slot="end" class="toggle_btn">
+          <ion-icon slot="icon-only" [name]="viewPassword == true? 'eye-outline':'eye-off-outline'">
+          </ion-icon>
+        </ion-button>
+      </ion-item>
+
+
+
+      <ion-text color="danger">
+        <p [hidden]="login.password !='' || submitted == false" class="ion-padding-start">
+          {{util.translate("Password is required")}}
+        </p>
+      </ion-text>
+
+      <ion-button (click)="onLogin(loginForm)" type="submit" expand="block" [disabled]="isLogin" shape="round" class="login_btn">
+        <ion-spinner name="circles" *ngIf="isLogin"></ion-spinner>
+        <span *ngIf="!isLogin"> {{util.translate("SIGN IN")}} </span>
+      </ion-button>
+
+    </form>
+
+
+
+
+
+
+  </div>
+</ion-content>
+
+
+
+

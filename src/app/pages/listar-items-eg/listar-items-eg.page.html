@@ -1,0 +1,96 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" mode="ios">
+
+    <ion-buttons slot="start">
+      <ion-button (click)="onBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{util.translate('Detalle')}} </ion-title>
+
+    <ion-buttons slot="end">
+
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+
+
+
+
+<ion-content>
+  <ion-searchbar [placeholder]="util.translate('Search')" mode="ios" inputmode="text" type="text" (ionChange)="onSearchChange($event)" [debounce]="250" animated></ion-searchbar>
+  <h2 class="ion-text-center" *ngIf="apiCalled == false && !oldOrders?.length">{{util.translate('No se encontró ningún Artículo disponible')}}</h2>
+
+
+  <ion-list *ngIf="apiCalled == false">
+    <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0]">
+
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+  <ion-card class="order-list" *ngIf="apiCalled == true">
+    <ion-item lines="none">
+      <ion-thumbnail slot="start">
+        <img [src]="api.mediaURL+'ICON.png'" onError="this.src='assets/imgs/placeholder.jpeg'" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2 class="store-name">{{util.translate('Nro. de Documento')}}:  {{docmun}}</h2>
+        <h2 class="store-address">{{numero_de_dui}}</h2>
+      </ion-label>
+    </ion-item>
+
+    <ion-card-content class="card-content" style="padding: 2px;">
+      <div class="item-total-list" style="width: 100%;">
+         <ion-label class="store-address_history_title"  style="width: 15%; text-align: left;"> {{util.translate('Nro. Artículo')}}</ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 45%; text-align: left;" > {{util.translate('Descripción')}}  </ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 20%; text-align: right;"> {{util.translate('Cantidad')}} </ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 20%; text-align: right;"> {{util.translate('Cantidad Pendiente')}}</ion-label> 
+      
+      </div>
+    </ion-card-content>
+
+
+    <ion-card-content *ngFor="let item of oldOrders"  class="card-content"  style="padding: 2px;">
+
+      <div class="item-total-list"  *ngIf="item.Estado == 0 && item.CantidadPendiente == 0" style="color:red">
+         <ion-label class="store-address_history"  style="width: 15%;text-align: left;"> {{item.ItemCode}}</ion-label> 
+         <ion-label class="store-address_history"  style="width: 45%;text-align: left;"> {{item.Descripcion}}  </ion-label> 
+         <ion-label class="store-address_history"  style="width: 20%;text-align: right;">{{item.Cantidad}} </ion-label> 
+         <ion-label class="store-address_history"  style="width: 20%;text-align: right;"> {{item.CantidadPendiente}}</ion-label> 
+      </div>
+
+
+      <div class="item-total-list"  *ngIf="item.Estado == 1">
+        <ion-label class="store-address_history"  style="width: 15%;text-align: left;"> {{item.ItemCode}}</ion-label> 
+        <ion-label class="store-address_history"  style="width: 45%;text-align: left;"> {{item.Descripcion}}  </ion-label> 
+        <ion-label class="store-address_history"  style="width: 20%;text-align: right;">{{item.Cantidad}} </ion-label> 
+        <ion-label class="store-address_history"  style="width: 20%;text-align: right;"> {{item.CantidadPendiente}}</ion-label> 
+     </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+
+
+</ion-content>

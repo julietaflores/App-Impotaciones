@@ -1,0 +1,133 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{util.translate("Lista de Items Registrados")}} </ion-title>
+
+    <ion-buttons slot="end"  >
+      <ion-button (click)="selected()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content>
+
+
+  
+  <ion-searchbar [placeholder]="util.translate('Busqueda de Items')" mode="ios" inputmode="text" type="text"   [(ngModel)]="valor_busqueda"  #ionInputEl
+  (ionInput)="onInpu($event)"  (ionChange)="onSearchChange($event)" [debounce]="250" animated></ion-searchbar>
+
+  <ion-list *ngIf="Lotes?.length != 0">
+    <ion-item *ngFor="let item of Lotes; let ig = index">
+
+
+
+      
+      
+      <ion-label  *ngIf="item.cambio==1"  style="background: burlywood;margin: 5% auto;border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;padding: 1em;" > 
+
+        <strong><p >{{item.cont}}.-</p></strong>  
+        <strong><p>{{util.translate('Nro. de Proyecto')}}: {{item.Proyecto}}</p></strong>  
+        <strong> <p>{{item.U_IM_NumeroDUI}}</p></strong>  
+        <strong><p>{{util.translate('Nro. de Factura')}}: {{item.DocNum}}</p></strong>  
+        <p>{{util.translate('Nro. Artículo')}}: {{item.ItemCode}}</p>
+        <p class="items-registradoss" style="color:red" >{{util.translate('Descripción')}}: {{item.Descripcion}}</p>
+        <strong> <p>{{util.translate('Cantidad Total Actualmente')}}: {{item.CantidadPendiente}} {{item.SalUnit}}</p></strong>  
+        <strong> <p>{{util.translate('Total peso por enviar')}}: {{item.Peso_Actual_control}} {{item.AB}}</p></strong>  
+
+        <br>
+
+
+        <strong><p class="ion-text-center" *ngIf="item.ValidarLotes=='N'" >{{util.translate('Registrar Cantidad en ')}} {{item.SalUnit}}</p></strong> 
+        
+        
+        <ion-searchbar  *ngIf="item.ValidarLotes=='N'"  
+            id="{{item.Id}}"   value="{{item.Cantidad_Envio}}"  (ionInput)="onInput($event,item.Id,item.Unidad,item.cont,item.DocEntry,item.LineNum, ig)"
+            search-icon="create-outline"  placeholder="{{util.translate('Registrar Cantidad en ')}} {{item.SalUnit}}" 
+             mode="ios" inputmode="text" type="text" [debounce]="250" animated>
+        </ion-searchbar> 
+
+      </ion-label> 
+
+
+      <ion-label  *ngIf="item.cambio==0"  > 
+
+        <strong><p >{{item.cont}}.-</p></strong>  
+        <strong><p>{{util.translate('Nro. de Proyecto')}}: {{item.Proyecto}}</p></strong>  
+        <strong> <p>{{item.U_IM_NumeroDUI}}</p></strong>  
+        <strong><p>{{util.translate('Nro. de Factura')}}: {{item.DocNum}}</p></strong>  
+        <p>{{util.translate('Nro. Artículo')}}: {{item.ItemCode}}</p>
+        <p class="items-registradoss" style="color:red" >{{util.translate('Descripción')}}: {{item.Descripcion}}</p>
+        <strong> <p>{{util.translate('Cantidad Total Actualmente')}}: {{item.CantidadPendiente}} {{item.SalUnit}}</p></strong>  
+        <strong> <p>{{util.translate('Total peso por enviar')}}: {{item.Peso_Actual_control}} {{item.AB}}</p></strong>  
+        <br>
+
+        <strong><p class="ion-text-center" *ngIf="item.ValidarLotes=='N'" >{{util.translate('Registrar Cantidad en ')}} {{item.SalUnit}}</p></strong> 
+        
+        
+        <ion-searchbar  *ngIf="item.ValidarLotes=='N'"  
+            id="{{item.Id}}"   value="{{item.Cantidad_Envio}}"  (ionInput)="onInput($event,item.Id,item.Unidad,item.cont,item.DocEntry,item.LineNum, ig)"
+            search-icon="create-outline"  placeholder="{{util.translate('Registrar Cantidad en ')}} {{item.SalUnit}}" 
+             mode="ios" inputmode="text" type="text" [debounce]="250" animated>
+        </ion-searchbar> 
+
+      </ion-label> 
+
+
+      <ion-buttons  *ngIf="item.ValidarLotes=='Y'"   slot="end"  >
+        <ion-button (click)="preguntar_tipo_de_seleccionn(item.Id,item.Proyecto, item.ValidarLotes, item.DocEntry, item.ItemCode, item.AB, item.LineNum, item.Unidad, item.cont)">
+          <ion-icon name="barcode-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+
+
+
+
+      </ion-item>
+  </ion-list>
+
+
+
+  <ion-item *ngFor="let item of dummy">
+    <ion-thumbnail slot="start">
+      <ion-skeleton-text animated style="width: 100%;height: 100px;"></ion-skeleton-text>
+    </ion-thumbnail>
+    <ion-label>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-label>
+  </ion-item>
+
+
+
+
+
+  <ion-infinite-scroll threshold="200px" (ionInfinite)="doRefreshh($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="util.translate('Loading more data...')">  </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+
+      
+  <div *ngIf="Lotes?.length == 0 && limit>1" class="no-data">
+    <div [ngStyle]="{'background-image':'url(assets/imgs/no_data.png)'}" class="no-data-image"></div>
+    <ion-label class="title">{{util.translate('No hay Datos')}} </ion-label>
+  </div>
+
+
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="this.util.lotes_auxiliar_v3.length">
+    <ion-fab-button (click)="selected()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+  
+</ion-content>

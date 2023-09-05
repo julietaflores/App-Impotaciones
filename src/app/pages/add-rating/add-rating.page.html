@@ -1,0 +1,46 @@
+<ion-header class="ion-no-border" mode="md">
+  <ion-toolbar color="primary">
+    <ion-title>{{util.translate("Add Review to")}} {{name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" color="light" name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="main_content_div_review">
+
+    <div class="main_div">
+      
+      
+      
+      <ion-card *ngIf="to =='service'" class="service-card">
+        <ion-select [(ngModel)]="service_id" [placeholder]="util.translate('Select Service')">
+          <ion-select-option [value]="item.id" *ngFor="let item of items;let i = index">
+            {{item.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-card>
+
+
+
+      <div class="info_div">
+        <div class="rattingBtns">
+          <rating [(ngModel)]="rate" readOnly="false" max="5" emptyStarIconName="star-outline"
+            halfStarIconName="star-half" starIconName="star" nullable="false" (ngModelChange)="onRatingChange($event)">
+          </rating>
+        </div>
+        <ion-card class="service-card">
+          <ion-textarea rows="5" type="text" [placeholder]="util.translate('Comment')" [(ngModel)]="comment">
+          </ion-textarea>
+        </ion-card>
+        <br>
+
+        <ion-button (click)="submit()" expand="block">
+          {{util.translate('Submit')}}
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

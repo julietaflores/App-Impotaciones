@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" mode="ios">
+
+    <ion-buttons slot="start">
+      <ion-button (click)="onBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{util.translate('Detalle')}} </ion-title>
+
+    <ion-buttons slot="end">
+
+      <!-- <ion-button (click)="openHelp()">
+        <ion-icon slot="icon-only" name="help-circle-outline" color="light"></ion-icon>
+      </ion-button> -->
+     <!-- 
+      <ion-button (click)="invoice()">
+        <ion-icon slot="icon-only" name="print-outline" color="light"></ion-icon>
+      </ion-button> -->
+
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+
+<ion-content>
+   <!-- <div *ngIf="apiCalled == false" class="loader">
+    <ion-spinner name="circular"></ion-spinner>
+  </div> -->
+
+
+  <ion-card class="order-list" *ngIf="apiCalled == true">
+    <ion-item lines="none">
+      <ion-thumbnail slot="start">
+        <img [src]="api.mediaURL+'ICON.png'" onError="this.src='assets/imgs/placeholder.jpeg'" />
+      </ion-thumbnail>
+
+      <ion-label>
+        <h2 class="store-name">{{util.translate('Nro. de Documento')}}:  {{storeName}}</h2>
+        <h2 class="store-address">{{storeAddress}}</h2>
+       
+      </ion-label>
+    </ion-item>
+
+    <ion-card-content class="card-content" style="padding: 2px;">
+      <div class="item-total-list" style="width: 100%;">
+         <ion-label class="store-address_history_title"  style="width: 15%; text-align: left;"> {{util.translate('Nro. Artículo')}}</ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 25%; text-align: left;" > {{util.translate('Descripción')}}  </ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 15%; text-align: right;"> {{util.translate('Cantidad')}} </ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 15%; text-align: right;"> {{util.translate('Cantidad Llegada')}}</ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 11%; text-align: center;"> {{util.translate('Validar')}}  </ion-label> 
+      </div>
+    </ion-card-content>
+
+
+    <ion-card-content *ngFor="let item of oldOrders"  class="card-content"  style="padding: 2px;">
+      <div class="item-total-list">
+         <ion-label class="store-address_history"  style="width: 15%;text-align: left;"> {{item.ItemCode}}</ion-label> 
+         <ion-label class="store-address_history"  style="width: 25%;text-align: left;"> {{item.Dscription}}  </ion-label> 
+         <ion-label class="store-address_history"  style="width: 15%;text-align: right;">{{item.Quantity}} </ion-label> 
+         <ion-label class="store-address_history"  style="width: 15%;text-align: right;"> {{item.Cantidad}}</ion-label> 
+
+         <ion-button *ngIf="item.Quantity != item.Cantidad"  (click)="registrar_datos_articulo(item.LineNum)"    style="width: 11%;text-align: center; padding: 1px; height: 25px;">
+           <ion-icon slot="end" name="search-outline"   style="margin: auto; width: 100%;" ></ion-icon>
+        </ion-button> 
+
+        <ion-button *ngIf="item.Quantity == item.Cantidad"  (click)="ver_datos_articulo(item.LineNum)"    style="width: 11%;text-align: center; padding: 1px; height: 25px;">
+          <ion-icon slot="end" name="search-outline"   style="margin: auto; width: 100%;" ></ion-icon>
+       </ion-button> 
+       
+
+      </div>
+    </ion-card-content>
+
+
+
+
+  </ion-card>
+
+
+
+</ion-content>
+
+
+
+
+
+
+
+
+<ion-footer  *ngIf="!isValidar && data_recepcion__l==1" >
+  <ion-toolbar>
+    <ion-button (click)="guardar_todo()" expand="block" shape="round" class="login_btn"  [disabled]="isValidar">
+      <span *ngIf="!isValidar"> {{util.translate('Registrar Detalle')}}</span>
+      <ion-spinner name="circles" *ngIf="isValidar"></ion-spinner>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+
+<ion-footer  *ngIf="isValidar && data_recepcion__l==0" >
+  
+</ion-footer>
+

@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{util.translate("Lista de Estado")}} </ion-title>
+    <ion-buttons slot="end"  *ngIf="savedEstados_Id.length>=0">
+      <ion-button (click)="selected()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content>
+
+
+  <ion-searchbar [placeholder]="util.translate('Search')" mode="ios" inputmode="text" type="text" (ionChange)="onSearchChange($event)" [debounce]="250" animated></ion-searchbar>
+  <h2 class="ion-text-center" *ngIf="apiCalled == false && !Lista_estados_factura?.length">{{util.translate('No se encontró ningún estado disponible')}}</h2>
+
+
+  <ion-list *ngIf="apiCalled == false">
+    <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0]">
+
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+  <ion-list *ngIf="apiCalled == true">
+    <ion-item *ngFor="let item of Lista_estados_factura">
+      <ion-label> 
+        <p>{{item.Detalle}}</p>
+      </ion-label> 
+      <ion-checkbox slot="end" mode="md"    [checked]="savedEstados_Id.includes(item.Id)" (ionChange)="checkChange($event,item.Id)"></ion-checkbox>
+      </ion-item>
+  </ion-list>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="savedEstados_Id.length">
+    <ion-fab-button (click)="selected()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,136 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" mode="ios">
+    <ion-buttons slot="start">
+      <ion-button (click)="onBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{util.translate('Detalle de Factura')}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content class="ion-padding">
+
+  <ion-row >
+    <ion-col size="4" (click)="uploadImage()"  *ngIf="images.length >= 0 && images.length < 4"  >
+      <div class="upload_tag">
+        <ion-icon slot="icon-only" name="cloud-upload-outline"></ion-icon>
+        <ion-label>{{util.translate('Upload Image')}} </ion-label>
+        <ion-label>{{images.length}} </ion-label>
+      </div>
+    </ion-col>
+    <ion-col size="4" *ngFor="let item of images">
+      <div class="image_div" [ngStyle]="{'background-image':'url('+api.mediaURL1+item+'),url(assets/imgs/nodata.png)'}">
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <br/>
+
+
+  <ion-item lines="none" detail="" (click)="open_estado_factura()">
+    <ion-label>
+      <h2>{{util.translate('Lista de Estado Factura')}} </h2>
+      <ion-label *ngFor="let itemm of lista_estado_fact"> 
+        <p>{{itemm.Detalle}}</p>
+        <p>**********************</p>
+      </ion-label>
+
+    </ion-label>
+  </ion-item>
+
+
+
+  <br/>
+
+  <div  class="item-complaints">
+    <ion-label class="title">{{util.translate('Comments')}} </ion-label>
+    <ion-textarea   class="lista_datos" rows="3" [(ngModel)]="short_message" type="text" 
+       [placeholder]="util.translate('Escribe algún Comentario')" >
+    </ion-textarea>
+  </div>
+
+
+
+
+  <ion-button   (click)="onSave()" mode="ios">
+    {{util.translate('Guardar detalle')}}
+  </ion-button>
+
+
+
+<ion-card class="order-list"    *ngIf="old_ListaEstadoF.length > 0" >
+    <ion-card-content class="card-content" style="padding: 2px;">
+      <div class="item-total-list" style="width: 100%;">
+         <ion-label class="store-address_history_title"  style="width: 22%; text-align: right;" > {{util.translate('Estados')}}  </ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 22%; text-align: right;" > {{util.translate('Comentario')}}  </ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"> {{util.translate('Imagen 1')}} </ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"> {{util.translate('Imagen 2')}}</ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"> {{util.translate('Imagen 3')}}  </ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"> {{util.translate('Imagen 4')}}  </ion-label> 
+      </div>
+    </ion-card-content>
+
+
+
+
+    <ion-card-content *ngFor="let item of old_ListaEstadoF"  class="card-content"  style="padding: 2px;">
+      <div class="item-total-list" style="width: 100%; padding: 15px 0px;">
+         <ion-label class="store-address_history"  style="width: 20%; text-align: right;">    {{item.estados}}</ion-label> 
+
+         <ion-label class="store-address_history"  style="width: 22%; text-align: right;" *ngIf="item.Comentario == ''"    >   {{util.translate('Sin Comentario')}}  </ion-label> 
+         <ion-label class="store-address_history"  style="width: 22%; text-align: right;" *ngIf="item.Comentario != ''"    >   {{item.Comentario}}  </ion-label> 
+
+
+
+         <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"  *ngIf="item.Foto1 == ''">  
+          <img src="assets/imgs/placeholder.jpeg"  style="width: 100%;padding: 4px;height: 60px;"   />
+        </ion-label> 
+
+        <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"  *ngIf="item.Foto1 != ''">  
+          <img src="{{api.mediaURL1+item.Foto1}}"  style="width: 100%;padding: 4px;height: 60px;"    onError="this.src='assets/imgs/placeholder.jpeg'"     (click)="ber(api.mediaURL1+item.Foto1)"  />
+        </ion-label> 
+
+
+
+
+        <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"  *ngIf="item.Foto2 == ''">  
+          <img src="assets/imgs/placeholder.jpeg"   style="width: 100%;padding: 4px;height: 60px;"    />
+        </ion-label> 
+
+        <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"  *ngIf="item.Foto2 != ''">  
+          <img src="{{api.mediaURL1+item.Foto2}}"  style="width: 100%;padding: 4px;height: 60px;"    onError="this.src='assets/imgs/placeholder.jpeg'"     (click)="ber(api.mediaURL1+item.Foto2)"  />
+        </ion-label> 
+
+
+
+        <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"  *ngIf="item.Foto3 == ''">  
+          <img src="assets/imgs/placeholder.jpeg"   style="width: 100%;padding: 4px;height: 60px;"    />
+        </ion-label> 
+
+        <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"  *ngIf="item.Foto3 != ''">  
+          <img src="{{api.mediaURL1+item.Foto3}}"  style="width: 100%;padding: 4px;height: 60px;"    onError="this.src='assets/imgs/placeholder.jpeg'"     (click)="ber(api.mediaURL1+item.Foto3)"  />
+        </ion-label> 
+
+
+
+        <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"  *ngIf="item.Foto4 == ''">  
+          <img src="assets/imgs/placeholder.jpeg"   style="width: 100%;padding: 4px;height: 60px;"    />
+        </ion-label> 
+
+        <ion-label class="store-address_history_title"  style="width: 21%; text-align: center;"  *ngIf="item.Foto4 != ''">  
+          <img src="{{api.mediaURL1+item.Foto4}}"  style="width: 100%;padding: 4px;height: 60px;"    onError="this.src='assets/imgs/placeholder.jpeg'"     (click)="ber(api.mediaURL1+item.Foto4)"  />
+        </ion-label> 
+
+
+
+
+
+      </div>
+    </ion-card-content>
+</ion-card> 
+
+
+</ion-content>

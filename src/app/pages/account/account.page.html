@@ -1,0 +1,100 @@
+<ion-header mode="md" [translucent]="true"  class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="end" name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{util.translate('Settings')}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+
+
+
+
+<ion-content class="ion-padding">
+
+  <div class="content">
+
+    <div class="title">
+      <h6>{{util.translate('Accounts')}} </h6>
+    </div>
+
+    <div class="items">
+
+
+<!-- 
+      <ion-item lines="none" (click)="onLanguage()">
+        <ion-buttons slot="start">
+          <ion-button color="dark">
+            <ion-icon name="language-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-label> {{util.translate('Languages')}} </ion-label>
+        <ion-buttons slot="end">
+          <ion-button color="dark">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item> -->
+
+
+
+
+
+      <ion-item lines="none" (click)="logout()" >
+        <ion-buttons slot="start">
+          <ion-button color="dark">
+            <ion-icon name="log-out-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-label> {{util.translate("Sign Out")}} </ion-label>
+        <ion-buttons slot="end">
+          <ion-button color="dark">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+
+
+
+    </div>
+
+    <div class="title">
+      <h6>{{util.translate("More Options")}} </h6>
+    </div>
+
+
+
+
+    <div class="items">
+
+      <ion-item lines="none" (click)="openPage('Nosotros','1')">
+        <ion-buttons slot="start">
+          <ion-button color="dark">
+            <ion-icon name="reader-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-label>{{util.translate("About Us")}} </ion-label>
+        <ion-buttons slot="end">
+          <ion-button color="dark">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+
+
+
+
+
+
+    </div>
+
+  </div>
+
+
+</ion-content>

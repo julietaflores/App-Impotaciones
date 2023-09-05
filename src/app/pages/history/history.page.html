@@ -1,0 +1,71 @@
+
+
+
+
+<ion-header  mode="md"  class="ion-no-border"  [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="end" name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title color="light" class="ion-text-left">
+      <div class="ion-activatable">
+        <div class="head-tag" >
+          <ion-label class="title">{{addressTitle}}</ion-label>
+        </div>
+        <ion-ripple-effect type="bounded"></ion-ripple-effect>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+
+<ion-content>
+
+
+  <ion-card *ngFor="let item of oldOrders" class="order-list" >
+    <ion-item lines="none">
+      <div class="thum" >
+        <img [src]="'assets/imgs/noti.png'"   onError="this.src='assets/imgs/placeholder.jpeg'"  />
+      </div>
+      <ion-label>
+        <h2 class="deliveryAddress">{{item.Title}}  </h2>
+        <h2 class="deliveryAddress">{{item.Detalle}}  </h2>
+        <p class="store-address">{{item.FechaRegistro}}</p>
+      </ion-label>
+    
+    </ion-item>
+  </ion-card>
+
+    <ion-item *ngFor="let item of dummy">
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text animated style="width: 100%;height: 100px;"></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="doRefresh($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="util.translate('Cargando más notificaciones...')">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+
+    <div *ngIf="dummy.length == 0 && oldOrders?.length == 0" class="no-data">
+      <div [ngStyle]="{'background-image':'url(assets/imgs/no_data.png)'}" class="no-data-image"></div>
+      <ion-label class="title">{{util.translate('No hay Notificaciones')}} </ion-label>
+    </div>
+
+
+
+
+
+</ion-content>

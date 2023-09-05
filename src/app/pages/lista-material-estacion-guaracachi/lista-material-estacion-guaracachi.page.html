@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" mode="ios">
+    <ion-buttons slot="start">
+      <ion-button (click)="onBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{util.translate('Lista de Items en Estación Guaracachi')}} </ion-title>
+
+    <ion-buttons slot="end">
+
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+
+<ion-content>
+  <ion-searchbar  *ngIf="apiCalled == true" [placeholder]="util.translate('Search')" mode="ios" inputmode="text" type="text" (ionChange)="onSearchChange($event)" [debounce]="250" animated></ion-searchbar>
+ 
+ 
+  <ion-card class="order-list" *ngIf="apiCalled == true && oldOrders?.length != 0" >
+
+
+    <ion-card-content class="card-content" style="padding: 2px;" >
+      <div class="item-total-list" style="width: 100%;">
+         <ion-label class="store-address_history_title"  style="width: 7%; text-align: left;"> #</ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 10%; text-align: left;"> {{util.translate('Nro. Artículo')}}</ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 20%; text-align: center;" > {{util.translate('Descripción')}}  </ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 20%; text-align: right;"> {{util.translate('Cantidad')}} </ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 20%; text-align: right;"> {{util.translate('Cantidad Pendiente')}}</ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 10%; text-align: right;"> {{util.translate('Unidad')}}</ion-label> 
+         <ion-label class="store-address_history_title"  style="width: 13%; text-align: center;"> {{util.translate('Detalle')}}</ion-label> 
+      
+      </div>
+    </ion-card-content>
+
+
+    <ion-card-content *ngFor="let item of oldOrders"  class="card-content"  style="padding: 2px;">
+
+ 
+
+
+      <div class="item-total-list"  *ngIf="item.Estado == 1">
+        <ion-label class="store-address_history"  style="width: 7%;text-align: left;"> {{item.cont}}</ion-label> 
+        <ion-label class="store-address_history"  style="width: 10%;text-align: left;"> {{item.ItemCode}}</ion-label> 
+        <ion-label class="store-address_history"  style="width: 20%;text-align: center;"> {{item.Descripcion}}  </ion-label> 
+        <ion-label class="store-address_history"  style="width: 20%;text-align: right;">{{item.Cantidad}} </ion-label> 
+        <ion-label class="store-address_history"  style="width: 20%;text-align: right;"> {{item.CantidadPendiente}}</ion-label> 
+        <ion-label class="store-address_history"  style="width: 10%;text-align: right;"> {{item.SalUnit}}</ion-label> 
+        <ion-button class="store-address_history" style="width: 13%; text-align: center;"  mode="ios" 
+        (click)="registrar_fotos_y_comentarios(item.Id,1, 1)">   
+        <ion-icon  name="camera" ></ion-icon>
+        </ion-button>
+
+     </div>
+
+    </ion-card-content>
+
+  </ion-card>
+ 
+
+
+
+
+  
+ 
+  <h2 class="ion-text-center" *ngIf="apiCalled == false">{{util.translate('No se encontró ningún Artículo disponible')}}</h2>
+
+  <ion-list *ngIf="apiCalled == false">
+    <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0]">
+
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+
+
+    
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="doRefresh($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="util.translate('Loading more data...')">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+
+      
+  <div *ngIf="dummyCate.length == 0 && oldOrders?.length == 0" class="no-data">
+    <div [ngStyle]="{'background-image':'url(assets/imgs/no_data.png)'}" class="no-data-image"></div>
+    <ion-label class="title">{{util.translate('No hay Datos')}} </ion-label>
+  </div>
+
+
+</ion-content>

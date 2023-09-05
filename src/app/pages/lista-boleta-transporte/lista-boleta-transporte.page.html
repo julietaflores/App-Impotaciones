@@ -1,0 +1,94 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" mode="ios">
+    <ion-buttons slot="start">
+      <ion-button (click)="onBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{util.translate('Detalle')}} </ion-title>
+
+    <ion-buttons slot="end">
+
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+
+<ion-content>
+
+  
+  <ion-searchbar  [placeholder]="util.translate('Buscar Boleta')" mode="ios" inputmode="text" type="text"  (ionInput)="onInpu($event)"  #ionInputEl
+  (ionChange)="onSearchChange($event)" [debounce]="250" animated></ion-searchbar>
+ 
+ 
+  <ion-card class="order-list" *ngIf="oldOrders?.length != 0" >
+
+
+    <ion-card-content class="card-content" style="padding: 2px;" >
+      <div class="item-total-list" style="width: 100%;">
+         <ion-label class="store-address_history_title_bt"  style="width: 8%; text-align: left;"> #</ion-label> 
+         <ion-label class="store-address_history_title_bt"  style="width: 16%; text-align: left;">  {{util.translate('Código Boleta')}}</ion-label> 
+         <ion-label class="store-address_history_title_bt"  style="width: 16%; text-align: left;" > {{util.translate('Ticket Balanza')}}  </ion-label> 
+         <ion-label class="store-address_history_title_bt"  style="width: 15%; text-align: left;"> {{util.translate('Fecha Registro')}} </ion-label> 
+         <ion-label class="store-address_history_title_bt"  style="width: 15%; text-align: left;"> {{util.translate('Estado Boleta')}} </ion-label> 
+         <ion-label  class="store-address_history_title_bt"  style="width: 15%; text-align: left;"> {{util.translate('Detalle')}} </ion-label> 
+      </div>
+    </ion-card-content>
+
+
+    <ion-card-content *ngFor="let item of oldOrders"  class="card-content"  style="padding: 2px;">
+
+    <div class="item-total-list">
+
+        <ion-label class="store-address_history_bt"  style="width: 8%;text-align: left;"> {{item.cont}}</ion-label> 
+        <ion-label class="store-address_history_bt"  style="width: 16%;text-align: left;"> {{item.Codigo}}</ion-label> 
+        <ion-label class="store-address_history_bt"  style="width: 16%;text-align: left;"> {{item.Ticket}}  </ion-label> 
+        <ion-label class="store-address_history_bt"  style="width: 15%;text-align: left;">{{item.FechaRegistroo}} </ion-label> 
+        <ion-label class="store-address_history_bt"  style="width: 15%;text-align: left; color: red;">{{item.estado_boleta}} </ion-label> 
+
+        <ion-button   class="store-address_history" style="width: 15%; text-align: left;"
+          mode="ios"  (click)="get_detalle_boleta(item.Id,item.Codigo )">   
+          <ion-icon  name="list" ></ion-icon>
+        </ion-button>  
+      
+
+    </div>
+
+
+    </ion-card-content>
+
+  </ion-card>
+ 
+
+
+
+
+  
+ 
+
+  <ion-item *ngFor="let item of dummy">
+    <ion-thumbnail slot="start">
+      <ion-skeleton-text animated style="width: 100%;height: 100px;"></ion-skeleton-text>
+    </ion-thumbnail>
+    <ion-label>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-label>
+  </ion-item>
+
+
+
+  <div *ngIf="oldOrders?.length == 0" class="no-data">
+    <div [ngStyle]="{'background-image':'url(assets/imgs/no_data.png)'}" class="no-data-image"></div>
+    <ion-label class="title">{{util.translate('No hay Datos')}} </ion-label>
+  </div>
+
+      
+
+
+</ion-content>

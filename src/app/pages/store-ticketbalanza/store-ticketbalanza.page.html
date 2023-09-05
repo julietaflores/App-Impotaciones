@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{util.translate("Lista Ticket Balanza")}} </ion-title>
+    <ion-buttons slot="end" >
+      <ion-button (click)="selected()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+
+
+  <ion-searchbar  [placeholder]="util.translate('Buscar por Placa')" mode="ios" inputmode="text" type="text"  (ionInput)="onInpu($event)"  #ionInputEl
+    (ionChange)="onSearchChange($event)" [debounce]="250" animated></ion-searchbar>
+
+
+  <ion-list *ngIf="apiCalled == true && Lista_TicketBalanza?.length != 0">
+    <ion-radio-group   [(ngModel)]="savedLista"   (ionChange)="changed($event)">
+      <ion-item *ngFor="let item of Lista_TicketBalanza" class="list" lines="none">
+        <ion-label> 
+          <p>{{util.translate('Nro de Ticket Balanzas')}}: {{item.U_NroTicket}}</p>
+          <p>{{util.translate('Nro de Placa')}}: {{item.U_Placa}}</p>
+          <p>{{item.U_Origen}}</p>
+          <p>{{util.translate('Marca')}}: {{item.U_Marca}}</p>
+          <p>{{util.translate('Chofer')}}: {{item.U_NombreChofer}}</p>
+          <p>{{util.translate('CI del Chofer')}}: {{item.U_CI_Chofer}}</p>
+          <p>{{util.translate('Fecha Registro Ticket')}}: {{item.U_Fecha}}</p>
+        </ion-label>
+        <ion-radio [value]="item.U_NroTicket" slot="end" mode="md"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+
+  <h2 class="ion-text-center" *ngIf="apiCalled == false">{{util.translate('No se encontró ningún Ticket de Balanza')}} </h2>
+
+  <ion-list *ngIf="apiCalled == false ">
+    <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8,9]">
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="savedListaTicketBalanzaId.length">
+    <ion-fab-button (click)="selected()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+
+
+</ion-content>

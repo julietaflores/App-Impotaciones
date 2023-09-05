@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{util.translate("Lista de Mercancía Registrada")}} </ion-title>
+
+    <ion-buttons slot="end"  >
+      <ion-button (click)="selected()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+
+  <ion-searchbar *ngIf="apiCalled == true" [placeholder]="util.translate('Search')" mode="ios" inputmode="text" type="text" (ionChange)="onSearchChange($event)" [debounce]="250" animated></ion-searchbar>
+
+  <ion-list *ngIf="apiCalled == true && Lotes?.length != 0">
+    <ion-item *ngFor="let item of Lotes">
+      <ion-label> 
+        <p>{{item.cont}}.-</p>
+        <p>{{util.translate('Nro. de Documento')}}: {{item.DocNum}}</p>
+        <p>{{item.U_IM_NumeroDUI}}</p>
+        <p>{{util.translate('Nro. Artículo')}}: {{item.ItemCode}}</p>
+        <p>{{util.translate('Descripción')}}: {{item.Descripcion}}</p>
+        <p>{{util.translate('Cantidad Total Alcualmente')}}: {{item.CantidadPendiente}}</p>
+
+
+        <input style="display: block;" id="{{item.Id}}_cantidadpendiente" value="{{item.CantidadPendiente}}">
+    
+        <ion-searchbar id="{{item.Id}}"   value="{{item.Cantidad_Envio}}" search-icon="create-outline" [placeholder]="util.translate('Registrar Cantidad')" mode="ios" inputmode="text" type="text" [debounce]="250" animated></ion-searchbar>
+      </ion-label> 
+      <ion-checkbox slot="end" mode="md"  [checked]="util.lotes_auxiliar_v1.includes(item.Id)" (ionChange)="checkChange($event,item.Id)"></ion-checkbox>
+      </ion-item>
+  </ion-list>
+
+
+
+  
+
+  <h2 class="ion-text-center" *ngIf="apiCalled == false">{{util.translate('No se encontró ningún Artículo disponible')}}</h2>
+  <ion-list *ngIf="apiCalled == false">
+    <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0]">
+
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="doRefresh($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="util.translate('Loading more data...')">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+
+      
+  <div *ngIf="dummyCate.length == 0 && Lotes?.length == 0" class="no-data">
+    <div [ngStyle]="{'background-image':'url(assets/imgs/no_data.png)'}" class="no-data-image"></div>
+    <ion-label class="title">{{util.translate('No hay Datos')}} </ion-label>
+  </div>
+
+
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="util.lotes_auxiliar_v1.length">
+    <ion-fab-button (click)="selected()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

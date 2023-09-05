@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{util.translate("Lista de Lotes Registrados")}}   </ion-title>
+    <ion-title> Tablero {{cont_item}}   </ion-title>
+    <ion-title> {{proyecto_item}}   </ion-title>
+    <ion-buttons slot="end"  *ngIf="util.dtos_lotes_v1.length>=0">
+      <ion-button (click)="selected()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content>
+  <ion-searchbar [placeholder]="util.translate('Busqueda de Lotes')" mode="ios" inputmode="text" type="text"  (ionInput)="onInpu($event)"  #ionInputEl
+   (ionChange)="onSearchChange($event)" [debounce]="250" animated></ion-searchbar>
+ 
+ 
+  <h2 class="ion-text-center" *ngIf="apiCalled == false && !Lista_lotes?.length">{{util.translate('No se encontró ningún lote disponible')}}</h2>
+
+  <ion-list *ngIf="apiCalled == false">
+    <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0]">
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+  <ion-list *ngIf="apiCalled == true">
+    <ion-item *ngFor="let item of Lista_lotes">
+      <ion-label>
+        <strong><p>{{item.cont}}</p></strong>   
+        <strong><p>{{util.translate("Lote")}}: {{item.DISTNUMBER}}</p></strong>  
+        <p>{{item.ItemCode}}</p>
+        <p  class="items-registradoss" style="color:red">{{item.Dscription}}</p> 
+        <strong><p>{{item.total}}  {{AB}}</p></strong>  
+      
+      </ion-label> 
+      <ion-checkbox slot="end" mode="md"    [checked]="util.dtos_lotes_v1.includes(item.DISTNUMBER)"
+       (ionChange)="checkChangee($event,item.DISTNUMBER,  item.totall, item.totall_cant)"></ion-checkbox>
+      </ion-item>
+  </ion-list>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="util.dtos_lotes_v1.length">
+    <ion-fab-button (click)="selected()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content> 

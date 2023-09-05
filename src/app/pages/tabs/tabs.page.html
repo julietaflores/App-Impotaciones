@@ -1,0 +1,25 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom" color="primary">
+    
+    <ion-tab-button tab="home/1">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>{{util.translate("Home")}} </ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="history" (click)="calcular_cant_noti()">
+      <ion-icon name="Notifications"></ion-icon>
+
+      <ion-badge   *ngIf="cantidad_notifificacion != 0" color="dark" >{{cantidad_notifificacion}}</ion-badge>
+
+      <ion-label>{{util.translate("Notification")}} </ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="account">
+      <ion-icon name="person-circle"></ion-icon>
+      <ion-label>{{util.translate("Account")}} </ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+</ion-tabs>

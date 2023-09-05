@@ -1,0 +1,8 @@
+{
+  "name": "Logística de Importaciones",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

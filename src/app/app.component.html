@@ -1,0 +1,75 @@
+
+
+<ion-app *ngIf="haveSignedIn()===true">
+
+
+
+   <ion-split-pane contentId="main-content" >
+
+
+
+     <ion-menu contentId="main-content" name="idd" id="idd"  type="overlay" side="start"   >
+
+      <ion-content>
+
+
+         <div class="infoSection">
+          <img class="userPhoto" [src]="api.mediaURL+util.appLogo" onError="this.src='assets/imgs/USER2.png'" alt="">
+            <p class="userName">{{util.appName}}</p>   
+            <p class="userName">{{util.applabor}}</p>   
+        </div>
+
+
+        <ion-list id="inbox-list" class="ion-no-padding">
+
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <ion-item lines="none" detail="false" (click)="urilroot.datos_inicioo.inicio_clik = i" routerDirection="root" [routerLink]="[p.url]"  [class.selected]="urilroot.datos_inicioo.inicio_clik == i">
+              <ion-icon slot="start" name="{{p.icn}}" [class.active]="urilroot.datos_inicioo.inicio_clik == i"></ion-icon>
+              <ion-label  style="white-space: pre-line;">  <p class="deliveryAddress">{{ getTranslate(p.title) }}</p></ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+
+          <ion-menu-toggle auto-hide="false" (click)="logout()" >
+            <ion-item routerDirection="root" lines="none" detail="false">
+              <ion-icon slot="start" name="power-outline"></ion-icon>
+              <ion-label>  <p class="deliveryAddress">{{getTranslate('Logout')}}</p> </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+         
+        </ion-list>  
+
+
+      </ion-content>
+
+    </ion-menu> 
+
+
+
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+
+  </ion-split-pane> 
+
+
+
+</ion-app>
+
+
+
+
+<ion-app *ngIf="haveSignedIn()===false">
+
+  <ion-split-pane contentId="main-content" >
+
+   <ion-router-outlet id="main-content"></ion-router-outlet>
+
+
+ </ion-split-pane> 
+
+
+
+</ion-app>
