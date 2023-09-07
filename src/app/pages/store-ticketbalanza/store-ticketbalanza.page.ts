@@ -39,9 +39,9 @@ export class StoreTicketbalanzaPage implements OnInit {
 
 
     getlista_ticket() {
-
+     console.log('Lista datos 1 julieta ');
     this.apiCalled = false;
-    this.api.get_public('ListaTicketBalanza').then((data: any) => {
+    this.api.get_public('ListaTicketBalanza_edit').then((data: any) => {
     
       if(data=='error'){
         this.util.errorToast(this.util.translate('No internet connection'), 'danger');
@@ -51,10 +51,7 @@ export class StoreTicketbalanzaPage implements OnInit {
         this.apiCalled = true;
         
         if(data.length>0){
-
           this.Lista_TicketBalanza_AUX = data;
-    
-
           this.Lista_TicketBalanza_AUX.forEach((elementrg:any, indexxg:any) => {
             console.log('datos info___ '+elementrg.U_Fecha); 
             elementrg.U_Fecha =moment(elementrg.U_Fecha).format('LL');
@@ -62,9 +59,12 @@ export class StoreTicketbalanzaPage implements OnInit {
              this.dummyCate.push(elementrg);
           });
           this.Lista_TicketBalanza_AUX = [];
-
           this.savedLista = this.saveListaTicketBalanza.map(item => item.U_NroTicket).toString();
           console.log('fff00_ '+this.savedLista);
+
+          this.savedListaTicketBalanzaId=[];
+          this.savedListaTicketBalanzaId.push(this.savedLista);
+
         }
        
       }
@@ -124,6 +124,9 @@ export class StoreTicketbalanzaPage implements OnInit {
       });
       this.modalController.dismiss(selectedCategories, 'ok');
     }
+
+
+
 
 
 

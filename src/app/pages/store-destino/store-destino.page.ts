@@ -57,6 +57,9 @@ export class StoreDestinoPage implements OnInit {
           });
           this.Lista_TicketDestino_AUX = [];
           this.savedLista = this.saveListaTicketdestino.map(item => item.WhsCode).toString();
+
+          this.savedListaTicketDestinoId=[];
+          this.savedListaTicketDestinoId.push(this.savedLista);
         }
        
       }

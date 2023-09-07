@@ -40,13 +40,16 @@ export class BoletaEditEPage implements OnInit {
   email: any = '';
   storeId: any = '';
   isLogin: boolean = false;
-
   nombre_almacen_recepcion: any='';
   id_almacen_recepcion: any='';
   fecha_registro: any='';
+  ticket_id: any='';
+  destino_id: any='';
+  lista_mercaderiaa: any[] = [];
   AB:any='';
 
-
+  Detalle_B:any='';
+  Id_B:any=0;
 
     constructor(  
      public util: UtilService,
@@ -61,9 +64,13 @@ export class BoletaEditEPage implements OnInit {
 
       this.route.queryParams.subscribe((data: any) => {
         if (data && data.Id  && data.Detalle_b) {
+
+
           console.log('iop '+data.Id);
           console.log('iop '+data.Detalle_b);
 
+          this.Detalle_B= data.Detalle_b;
+          this.Id_B= data.Id;
 
           this.api.get_public('ListaAlmacen').then((data_l: any) => {
            data_l.forEach((element_:any) => {
@@ -74,20 +81,64 @@ export class BoletaEditEPage implements OnInit {
 
 
 
+          
+          this.api.get_public_parametro('detalle_boleta_id', { "id": this.Id_B }).then((data_boleta: any) => {
+            if(data_boleta=='error'){
+              this.util.errorToast(this.util.translate('No internet connection'), 'danger');
+            }else{
+                if(data_boleta.length>0){
+                  data_boleta.forEach((element_: any) => {
+                    this.fecha_registro=element_.FechaRegistro;
+                    this.fecha_registro=moment(this.fecha_registro).format('LLLL');
+                    this.ticket_id= element_.Ticket;
+                    this.destino_id= element_.IdDestino;
+                    this.comentario=element_.Comentario;
+                    
+                    localStorage.setItem("id_lotesss",JSON.stringify(element_.Mercaderia));
+                    localStorage.setItem("datos_lotes",JSON.stringify(element_.Lotes));
+     
+                    this.util.lotes_auxiliar_v3 =   JSON.parse(element_.Mercaderia|| "[]");
+                    this.util.lotes_auxiliar_v3 = this.util.lotes_auxiliar_v3.sort((a, b) => (a.campo1 > b.campo1) ? -1 : 1);
+                    console.log('json cambio localstore 1 items order'+JSON.stringify(this.util.lotes_auxiliar_v3));
+                    this.util.total_envio=0;
+                    if(this.util.lotes_auxiliar_v3.length>0){
+                      this.util.lotes_auxiliar_v3.forEach(oo => {
+                      this.util.total_envio=this.util.total_envio+parseFloat(oo.peso_actual);
+                    });
+                      this.util.total_envio = this.util.total_envio.toLocaleString('es-MX'); // 12,000
+                      this.util.total_envio_variable =  this.util.total_envio.replace(/,/g, '');
+                    }
+                    this.AB=localStorage.getItem('descripcion_2');
 
-      console.log('json cambio localstore 1 items '+JSON.stringify(localStorage.getItem("id_lotesss")));
-      this.util.lotes_auxiliar_v3 = JSON.parse(localStorage.getItem("id_lotesss") || "[]");
-      this.util.lotes_auxiliar_v3 = this.util.lotes_auxiliar_v3.sort((a, b) => (a.campo1 > b.campo1) ? -1 : 1);
-      console.log('json cambio localstore 1 items order'+JSON.stringify(this.util.lotes_auxiliar_v3));
-      this.util.total_envio=0;
-      if(this.util.lotes_auxiliar_v3.length>0){
-        this.util.lotes_auxiliar_v3.forEach(oo => {
-          this.util.total_envio=this.util.total_envio+parseFloat(oo.peso_actual);
-        });
-        this.util.total_envio = this.util.total_envio.toLocaleString('es-MX'); // 12,000
-        this.util.total_envio_variable =  this.util.total_envio.replace(/,/g, '');
-      }
-      this.AB=localStorage.getItem('descripcion_2');
+
+
+                    this.api.get_public_parametro('ListaTicketBalanza_id', { "Ticket_id": this.ticket_id }).then((data_ticket: any) => {
+                      this.lista_ticket_balanza = data_ticket;
+                      console.log('xsxs 1 '+JSON.stringify(this.lista_ticket_balanza));
+                    });
+
+
+
+                    this.api.get_public_parametro('ListaAlmacen_total_id', { "IdDestino": this.destino_id}).then((data_destino: any) => {
+                      this.lista_ticket_destino = data_destino;
+                      console.log('xsxs 1 '+JSON.stringify(this.lista_ticket_destino));
+                    });
+
+
+
+
+                  });
+                }
+            }
+          });
+
+
+
+
+
+
+   
+
 
 
 
@@ -99,9 +150,6 @@ export class BoletaEditEPage implements OnInit {
   
     ngOnInit() {
       moment.locale(localStorage.getItem('selectedLanguage') || 'es');
-      this.fecha_registro=moment().format('LLLL');
-      console.log(moment().format('YYYY-MM-DD HH:mm:ss'));
-      
     }
 
 
@@ -113,6 +161,10 @@ export class BoletaEditEPage implements OnInit {
         this.util.errorToast('All fields are required');
       }
     }
+
+
+
+
 
 
     async presentAlert() {

@@ -204,11 +204,13 @@ export class ListaMercanciaEg1Page implements OnInit {
              this.dummy = [];
              data.forEach((element__: any, indexx:any) => {
 
-              console.log('json  items 1 '+element__.Id);
+              console.log('json  items 1 1jft  '+element__.Id);
+              console.log('json  items 1 1jft  '+JSON.stringify(element__));
               this.util.lotes_auxiliar=[];
               this.util.lotes_auxiliar_v3.forEach(o => {
                 if (o.id_ === element__.Id) {
                   this.util.lotes_auxiliar.push(o);
+                  console.log('json items 1 1 1 1 '+JSON.stringify(this.util.lotes_auxiliar));
                 }
               });
             
@@ -245,6 +247,10 @@ export class ListaMercanciaEg1Page implements OnInit {
           
         }
       });
+
+
+
+      
     
   }
 
